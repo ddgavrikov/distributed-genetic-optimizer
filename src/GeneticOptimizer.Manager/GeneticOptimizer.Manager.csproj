@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\GeneticOptimizer.Contracts\GeneticOptimizer.Contracts.csproj" />
+    <ProjectReference Include="..\Tsp.Core\Tsp.Core.csproj" />
+    <ProjectReference Include="..\GeneticOptimizer.Worker\GeneticOptimizer.Worker.csproj"
+                      ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>

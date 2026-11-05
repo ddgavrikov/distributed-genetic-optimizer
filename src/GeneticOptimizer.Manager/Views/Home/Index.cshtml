@@ -1,0 +1,165 @@
+@{
+    ViewData["Title"] = "Распределённый коммивояжёр";
+}
+
+<form id="optimizer-form">
+    <div class="workspace-grid">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Вычислительные сервисы</h2>
+            </header>
+
+            <label for="serviceAddresses">IP-адреса и порты</label>
+            <textarea id="serviceAddresses" rows="3" spellcheck="false">localhost:5101
+localhost:5102</textarea>
+
+            <div class="row-actions">
+                <button type="button" class="button secondary" id="check-button">
+                    Запустить и проверить
+                </button>
+            </div>
+
+            <div id="health-results" class="status-list" aria-live="polite"></div>
+        </section>
+
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Города</h2>
+            </header>
+
+            <div class="field-grid compact">
+                <div class="field">
+                    <label for="cityCount">Количество городов</label>
+                    <input id="cityCount" type="number" min="3" max="500" value="30">
+                </div>
+                <div class="field">
+                    <label for="citySeed">Seed генерации</label>
+                    <input id="citySeed" type="number" value="42">
+                </div>
+            </div>
+
+            <button type="button" class="button secondary full" id="generate-button">
+                Создать города
+            </button>
+
+            <label for="coordinates">Координаты городов</label>
+            <textarea id="coordinates" rows="8" spellcheck="false"></textarea>
+        </section>
+
+        <section class="panel full-width">
+            <header class="panel-heading">
+                <h2>Параметры генетического алгоритма</h2>
+            </header>
+
+            <div class="field-grid algorithm-fields">
+                <div class="field">
+                    <label for="populationSize">Популяция на узел</label>
+                    <input id="populationSize" type="number" min="4" max="10000" value="400">
+                </div>
+                <div class="field">
+                    <label for="generations">Поколения</label>
+                    <input id="generations" type="number" min="1" max="1000000" value="1500">
+                </div>
+                <div class="field">
+                    <label for="mutationPercent">Мутация, %</label>
+                    <input id="mutationPercent" type="number" min="0" max="100" step="1" value="20">
+                </div>
+                <div class="field">
+                    <label for="eliteCount">Элитные особи</label>
+                    <input id="eliteCount" type="number" min="1" value="4">
+                </div>
+                <div class="field">
+                    <label for="threads">Потоков на узел</label>
+                    <input id="threads" type="number" min="0" max="256" value="0">
+                </div>
+                <div class="field">
+                    <label for="seed">Seed алгоритма</label>
+                    <input id="seed" type="number" value="42">
+                </div>
+            </div>
+
+            <div class="run-actions">
+                <button class="button primary" id="run-button" type="submit">
+                    <span>Начать поиск</span>
+                    <span>→</span>
+                </button>
+                <button class="button danger" id="stop-button" type="button" disabled>
+                    Остановить
+                </button>
+            </div>
+
+            <div class="progress-track">
+                <div id="progress-bar"></div>
+            </div>
+
+            <div id="main-message" class="main-message" aria-live="assertive">Создайте города и запустите поиск.</div>
+        </section>
+    </div>
+</form>
+
+<section id="results" class="results hidden" aria-live="polite">
+    <header class="result-header">
+        <h2>Результат</h2>
+    </header>
+
+    <div class="metrics">
+        <div class="metric accent">
+            <span>Лучшее расстояние</span>
+            <strong id="best-length">—</strong>
+        </div>
+        <div class="metric">
+            <span>Поколение</span>
+            <strong id="generation-value">—</strong>
+        </div>
+        <div class="metric">
+            <span>Время</span>
+            <strong id="elapsed">—</strong>
+        </div>
+    </div>
+
+    <div class="visual-grid">
+        <div class="canvas-card">
+            <h3>Маршрут по городам</h3>
+            <canvas id="route-canvas" width="850" height="520"></canvas>
+        </div>
+        <div class="canvas-card">
+            <h3>Последние 100 поколений</h3>
+            <canvas id="history-chart" width="850" height="300"></canvas>
+        </div>
+    </div>
+
+    <div class="details-grid">
+        <div class="table-card">
+            <h3>Порядок обхода и расстояния</h3>
+            <div class="route-sequence" id="route-sequence"></div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Переход</th>
+                            <th>Расстояние</th>
+                        </tr>
+                    </thead>
+                    <tbody id="edges-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>Состояние сервисов</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Сервис</th>
+                            <th>Статус</th>
+                            <th>Поколение</th>
+                            <th>Лучшее</th>
+                        </tr>
+                    </thead>
+                    <tbody id="workers-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

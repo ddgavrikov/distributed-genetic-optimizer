@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/GeneticOptimizer.Contracts/GeneticOptimizer.Contracts.csproj" />
+    <Project Path="src/GeneticOptimizer.Manager/GeneticOptimizer.Manager.csproj" />
+    <Project Path="src/GeneticOptimizer.Worker/GeneticOptimizer.Worker.csproj" />
+    <Project Path="src/Tsp.Core/Tsp.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/GeneticOptimizer.Worker.Tests/GeneticOptimizer.Worker.Tests.csproj" />
+  </Folder>
+</Solution>

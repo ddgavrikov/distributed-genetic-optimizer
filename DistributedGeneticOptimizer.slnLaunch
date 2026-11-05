@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "Manager (auto workers)",
+    "Projects": [
+      {
+        "Path": "src\\GeneticOptimizer.Manager\\GeneticOptimizer.Manager.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
